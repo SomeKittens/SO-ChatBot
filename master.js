@@ -750,7 +750,7 @@ var bot = window.bot = {
 		}
 		//mmmm....nachos
 		else {
-			errMsg += ' Use the help command to learn more.';
+			errMsg += ' Use the `!!/help` command to learn more.';
 		}
 		//wait a minute, these aren't nachos. these are bear cubs.
 		return errMsg;
@@ -3425,8 +3425,6 @@ IO.register( 'input', function afkInputListener ( msgObj ) {
 })();
 
 ;
-
-;
 (function () {
 "use strict";
 
@@ -4323,8 +4321,6 @@ bot.addCommand({
         'name/description. `/findCommand partOfNameOrDescription`'
 });
 })();
-
-;
 
 ;
 //listener to help decide which Firefly episode to watch
@@ -5537,6 +5533,46 @@ IO.register( 'userregister', function tracker ( user, room ) {
 
 ;
 (function () {
+"use strict";
+
+function command ( args, cb ) {
+	IO.jsonp({
+		url : 'http://127.0.0.1:1337',
+		jsonpName : 'callback',
+		data : {},
+		fun : finish
+	});
+
+	function finish ( resp ) {
+		console.log('node test');
+		console.log('******************************');
+		console.log(resp);
+		var res = resp.response;
+
+
+		if ( cb && cb.call ) {
+			cb( res );
+		}
+		else {
+			args.reply( res );
+		}
+	}
+}
+
+bot.addCommand({
+	name : 'nodeTest',
+	fun : command,
+	permissions : {
+		del : 'NONE'
+	},
+
+	description : 'Search Wikipedia. `/wiki term`',
+	async : true
+});
+})();
+
+;
+(function () {
 
 //collection of nudges; msgObj, time left and the message itself
 var nudges = [],
@@ -5926,8 +5962,6 @@ bot.addCommand({
 });
 
 })();
-
-;
 
 ;
 (function () {
